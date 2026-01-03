@@ -19,28 +19,44 @@ namespace H_Chat_Async_Server
         private TcpListener server;
         private NetworkStream stream;
         private string ip_addr = "172.18.171.66";
-        private int port = 5000;
+        private int port = 5001;
         private bool isRunning = false;
         ChatCore_Common.ChatCore_Async server_chatCore;
         List<ChatCore_Common.ChatCore_Async> clients = new List<ChatCore_Common.ChatCore_Async>();        
         public Server_Async()
-        {
+        {            
             InitializeComponent();
+        }
+        private void AllClose()
+        {
+            isRunning = false;
+            foreach(ChatCore_Common.ChatCore_Async client in clients)
+            {
+                client.Close();
+            }
+            server.Stop();
         }
         private void Server_Async_Load(object sender, EventArgs e)
         {
-            server=new TcpListener(IPAddress.Any, port);
-            server.Start();
-            IPHostEntry host = Dns.GetHostEntry(ip_addr);
-            foreach(IPAddress ip in host.AddressList)
+            try
             {
-                if(ip.AddressFamily==AddressFamily.InterNetwork)
+                server = new TcpListener(IPAddress.Any, port);
+                server.Start();
+                IPHostEntry host = Dns.GetHostEntry(ip_addr);
+                foreach (IPAddress ip in host.AddressList)
                 {
-                    textBox1.Text = ip.ToString();
-                    server_chatCore = new ChatCore_Async(null);                    
-                    server_chatCore.IP = new IPEndPoint(IPAddress.Parse(ip.ToString()), port);
-                    break;
+                    if (ip.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        textBox1.Text = ip.ToString();
+                        server_chatCore = new ChatCore_Async(null);
+                        server_chatCore.IP = new IPEndPoint(IPAddress.Parse(ip.ToString()), port);
+                        break;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
         private void DisoconnectClient(ChatCore_Async client)
@@ -132,6 +148,11 @@ namespace H_Chat_Async_Server
             {
                 InputBox.Clear();
             }));
+        }
+
+        private void Server_Async_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            AllClose();
         }
     }
 }

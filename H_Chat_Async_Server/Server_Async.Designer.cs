@@ -43,17 +43,19 @@
             // List_ConnectedIP
             // 
             this.List_ConnectedIP.FormattingEnabled = true;
-            this.List_ConnectedIP.ItemHeight = 12;
-            this.List_ConnectedIP.Location = new System.Drawing.Point(191, 86);
+            this.List_ConnectedIP.ItemHeight = 15;
+            this.List_ConnectedIP.Location = new System.Drawing.Point(218, 108);
+            this.List_ConnectedIP.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.List_ConnectedIP.Name = "List_ConnectedIP";
-            this.List_ConnectedIP.Size = new System.Drawing.Size(274, 64);
+            this.List_ConnectedIP.Size = new System.Drawing.Size(313, 79);
             this.List_ConnectedIP.TabIndex = 20;
             // 
             // BTN_Send
             // 
-            this.BTN_Send.Location = new System.Drawing.Point(620, 398);
+            this.BTN_Send.Location = new System.Drawing.Point(709, 498);
+            this.BTN_Send.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BTN_Send.Name = "BTN_Send";
-            this.BTN_Send.Size = new System.Drawing.Size(128, 23);
+            this.BTN_Send.Size = new System.Drawing.Size(146, 29);
             this.BTN_Send.TabIndex = 19;
             this.BTN_Send.Text = "보내기";
             this.BTN_Send.UseVisualStyleBackColor = true;
@@ -61,42 +63,45 @@
             // 
             // InputBox
             // 
-            this.InputBox.Location = new System.Drawing.Point(102, 398);
+            this.InputBox.Location = new System.Drawing.Point(117, 498);
+            this.InputBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.InputBox.Name = "InputBox";
-            this.InputBox.Size = new System.Drawing.Size(445, 21);
+            this.InputBox.Size = new System.Drawing.Size(508, 25);
             this.InputBox.TabIndex = 18;
             // 
             // L_InputMessage
             // 
             this.L_InputMessage.AutoSize = true;
-            this.L_InputMessage.Location = new System.Drawing.Point(55, 401);
+            this.L_InputMessage.Location = new System.Drawing.Point(63, 501);
             this.L_InputMessage.Name = "L_InputMessage";
-            this.L_InputMessage.Size = new System.Drawing.Size(41, 12);
+            this.L_InputMessage.Size = new System.Drawing.Size(52, 15);
             this.L_InputMessage.TabIndex = 17;
             this.L_InputMessage.Text = "입력 : ";
             // 
             // L_ChatWindow
             // 
             this.L_ChatWindow.AutoSize = true;
-            this.L_ChatWindow.Location = new System.Drawing.Point(100, 144);
+            this.L_ChatWindow.Location = new System.Drawing.Point(114, 180);
             this.L_ChatWindow.Name = "L_ChatWindow";
-            this.L_ChatWindow.Size = new System.Drawing.Size(41, 12);
+            this.L_ChatWindow.Size = new System.Drawing.Size(52, 15);
             this.L_ChatWindow.TabIndex = 16;
             this.L_ChatWindow.Text = "채팅창";
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(102, 168);
+            this.richTextBox1.Location = new System.Drawing.Point(117, 210);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(445, 209);
+            this.richTextBox1.Size = new System.Drawing.Size(508, 260);
             this.richTextBox1.TabIndex = 15;
             this.richTextBox1.Text = "";
             // 
             // BTN_ServerStart
             // 
-            this.BTN_ServerStart.Location = new System.Drawing.Point(443, 29);
+            this.BTN_ServerStart.Location = new System.Drawing.Point(506, 36);
+            this.BTN_ServerStart.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.BTN_ServerStart.Name = "BTN_ServerStart";
-            this.BTN_ServerStart.Size = new System.Drawing.Size(200, 23);
+            this.BTN_ServerStart.Size = new System.Drawing.Size(229, 29);
             this.BTN_ServerStart.TabIndex = 14;
             this.BTN_ServerStart.Text = "서버 활성";
             this.BTN_ServerStart.UseVisualStyleBackColor = true;
@@ -104,34 +109,35 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(147, 31);
+            this.textBox1.Location = new System.Drawing.Point(168, 39);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(242, 21);
+            this.textBox1.Size = new System.Drawing.Size(276, 25);
             this.textBox1.TabIndex = 13;
             // 
             // L_ConnectedIP
             // 
             this.L_ConnectedIP.AutoSize = true;
-            this.L_ConnectedIP.Location = new System.Drawing.Point(53, 86);
+            this.L_ConnectedIP.Location = new System.Drawing.Point(61, 108);
             this.L_ConnectedIP.Name = "L_ConnectedIP";
-            this.L_ConnectedIP.Size = new System.Drawing.Size(132, 12);
+            this.L_ConnectedIP.Size = new System.Drawing.Size(165, 15);
             this.L_ConnectedIP.TabIndex = 12;
             this.L_ConnectedIP.Text = "연결되 클라이언트 IP : ";
             // 
             // L_ServerIP
             // 
             this.L_ServerIP.AutoSize = true;
-            this.L_ServerIP.Location = new System.Drawing.Point(53, 31);
+            this.L_ServerIP.Location = new System.Drawing.Point(61, 39);
             this.L_ServerIP.Name = "L_ServerIP";
-            this.L_ServerIP.Size = new System.Drawing.Size(55, 12);
+            this.L_ServerIP.Size = new System.Drawing.Size(68, 15);
             this.L_ServerIP.TabIndex = 11;
             this.L_ServerIP.Text = "서버 Ip : ";
             // 
             // Server_Async
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(914, 562);
             this.Controls.Add(this.List_ConnectedIP);
             this.Controls.Add(this.BTN_Send);
             this.Controls.Add(this.InputBox);
@@ -142,8 +148,10 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.L_ConnectedIP);
             this.Controls.Add(this.L_ServerIP);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Server_Async";
             this.Text = "Server";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Server_Async_FormClosing);
             this.Load += new System.EventHandler(this.Server_Async_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

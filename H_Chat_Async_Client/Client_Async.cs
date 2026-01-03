@@ -27,7 +27,7 @@ namespace H_Chat_Async_Client
 
         private void BTN_ConnectServer_Click(object sender, EventArgs e)
         {
-            TcpClient client = new TcpClient(textBox1.Text,5000);
+            TcpClient client = new TcpClient(textBox1.Text,5001);
             core = new ChatCore_Common.ChatCore_Async(client);
             core.MessageReceived += OnMessageReceived;
 

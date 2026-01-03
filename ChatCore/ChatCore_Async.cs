@@ -30,6 +30,11 @@ namespace ChatCore_Common
         {
             return IP.Address.ToString() + ":" + IP.Port;
         }
+        public void Close()
+        {
+            stream.Close();
+            client.Close();
+        }
         public ChatCore_Async(TcpClient client)
         {
             if(client!=null)
