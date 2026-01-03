@@ -14,11 +14,12 @@ namespace ChatCore_Common
     {
         private TcpClient client;
         private NetworkStream stream;
-        public event Action<string> MessageReceived;
+        public event Action<ChatCore_Async,string> MessageReceived;
 
         public delegate void DisconnectedDelegate(ChatCore_Async sender);
         public event DisconnectedDelegate Disconnected;
         IPEndPoint remoteEndPoint;
+        IPEndPoint localEndPoint;
         public IPEndPoint IP
         {
             get; 
@@ -31,10 +32,15 @@ namespace ChatCore_Common
         }
         public ChatCore_Async(TcpClient client)
         {
-            this.client = client;
-            this.stream = client.GetStream();
+            if(client!=null)
+            {
+                this.client = client;
+                this.stream = client.GetStream();
 
-            remoteEndPoint = (IPEndPoint)client.Client.RemoteEndPoint;
+                remoteEndPoint = (IPEndPoint)client.Client.RemoteEndPoint;
+                localEndPoint = (IPEndPoint)client.Client.LocalEndPoint;
+            }
+            
         }
 
         public async Task Send_Async(string msg)
@@ -62,7 +68,7 @@ namespace ChatCore_Common
                     string msg = Encoding.UTF8.GetString(buffer,0,bytes);
                     if(MessageReceived!=null)
                     {
-                        MessageReceived(msg);
+                        MessageReceived(this,msg);
                     }
                 }
             }

@@ -31,24 +31,30 @@ namespace H_Chat_Async_Client
             core = new ChatCore_Common.ChatCore_Async(client);
             core.MessageReceived += OnMessageReceived;
 
-            IPEndPoint iPEndPoint = (IPEndPoint)client.Client.LocalEndPoint;
-            textBox2.Text= iPEndPoint.ToString();
+            IPEndPoint iPLocalEndPoint = (IPEndPoint)client.Client.LocalEndPoint;
+            textBox2.Text= iPLocalEndPoint.ToString();
+            core.IP = iPLocalEndPoint;
+
 
             core.StartReceive();
         }
 
-        private void OnMessageReceived(string message)
-        {
+        private void OnMessageReceived(ChatCore_Async sender,string message)
+        {                                    
+            string[] msg = message.Split('|');
+            string from = msg[0];
+            string content = msg[1];
+
             this.Invoke(new Action(() =>
             {
-                richTextBox1.AppendText(message+"\n");
+                richTextBox1.AppendText($"{from} : {content}"+"\n");
             }));
         }
 
         private async void BTN_Send_Click(object sender, EventArgs e)
         {
-            await core.Send_Async(InputBox.Text);
-            richTextBox1.AppendText(InputBox.Text+"\n");
+            await core.Send_Async($"{core.IP.ToString()}|{InputBox.Text}");
+            //richTextBox1.AppendText(core.IP+" : "+InputBox.Text+"\n");
             InputBox.Clear();
         }
     }

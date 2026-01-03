@@ -18,15 +18,15 @@ namespace H_Chat_Async_Server
     {
         private TcpListener server;
         private NetworkStream stream;
-        private string ip_addr = "192.168.45.195";
+        private string ip_addr = "172.18.171.66";
         private int port = 5000;
         private bool isRunning = false;
+        ChatCore_Common.ChatCore_Async server_chatCore;
         List<ChatCore_Common.ChatCore_Async> clients = new List<ChatCore_Common.ChatCore_Async>();        
         public Server_Async()
         {
             InitializeComponent();
         }
-
         private void Server_Async_Load(object sender, EventArgs e)
         {
             server=new TcpListener(IPAddress.Any, port);
@@ -37,35 +37,38 @@ namespace H_Chat_Async_Server
                 if(ip.AddressFamily==AddressFamily.InterNetwork)
                 {
                     textBox1.Text = ip.ToString();
+                    server_chatCore = new ChatCore_Async(null);                    
+                    server_chatCore.IP = new IPEndPoint(IPAddress.Parse(ip.ToString()), port);
                     break;
                 }
             }
         }
-
         private void DisoconnectClient(ChatCore_Async client)
         {            
             this.Invoke(new Action(() =>
             {
-                MessageBox.Show("클라 나감");
                 string target = client.ToString();
-                for(int i=0;i<clients.Count;i++)
-                {
-                    if (clients[i].ToString()== target)
-                    {
-                        List_ConnectedIP.Items.Remove(target);
-                        clients.Remove(client);
-                    }                        
-                }                
+                List_ConnectedIP.Items.Remove(target);
+                clients.Remove(client);
+                MessageBox.Show("클라 나감");
             }));            
         }
 
         private async void OnClientMessage(ChatCore_Async sender,string msg)
         {
+            string senderInfo = sender.ToString(); // IP:PORT
+
+            string[] str_arr = msg.Split('|');
+            string from = str_arr[0];
+            string content = str_arr[1];
+
+
             this.Invoke(new Action(() =>
             {
-                richTextBox1.AppendText($"{msg}" + "\n");
-            }));            
-            
+                richTextBox1.AppendText($"{from} : {content}" + "\n");
+            }));
+
+            await BroadCastingAsync(sender, $"{from}|{content}");
         }
         private void BTN_ServerStart_Click(object sender, EventArgs e)
         {
@@ -84,18 +87,15 @@ namespace H_Chat_Async_Server
                 
                 clients.Add(core);                             
 
-                IPEndPoint remote = (IPEndPoint)client.Client.RemoteEndPoint;
-
+                IPEndPoint client_Remote = (IPEndPoint)client.Client.RemoteEndPoint;//클라 ip
+                IPEndPoint client_Local = (IPEndPoint)client.Client.LocalEndPoint;//서버 ip
                 this.Invoke(new Action(() =>
                 {
-                    core.IP = remote;                    
-                    List_ConnectedIP.Items.Add(remote.ToString());
+                    core.IP = client_Remote;
+                    List_ConnectedIP.Items.Add(client_Remote.ToString());
                 }));
 
-                core.MessageReceived += (msg) =>
-                {
-                    OnClientMessage(core,msg);
-                };
+                core.MessageReceived +=OnClientMessage;                
 
                 core.Disconnected += DisoconnectClient;
 
@@ -105,39 +105,7 @@ namespace H_Chat_Async_Server
             }
         }
 
-        //private async Task ReceiveLoopAsync(TcpClient client)
-        //{
-        //    NetworkStream stream = client.GetStream();
-        //    byte[] buffer = new byte[4096];
-        //    try
-        //    {
-        //        while(true)
-        //        {
-        //
-        //
-        //            int bytes = await stream.ReadAsync(buffer, 0, buffer.Length);
-        //
-        //            if (bytes == 0)
-        //                break;
-        //
-        //            string msg = Encoding.UTF8.GetString(buffer, 0, bytes);
-        //
-        //            IPEndPoint remote = (IPEndPoint)client.Client.RemoteEndPoint;
-        //
-        //            this.Invoke(new Action(() =>
-        //            {
-        //                richTextBox1.AppendText($"{remote} :{msg}\n");
-        //            }));
-        //
-        //            await BroadCastingAsync(client, msg);
-        //        }                
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //}
-
+       
         private async Task BroadCastingAsync(ChatCore_Async server, string msg)
         {
             byte[] data = Encoding.UTF8.GetBytes(msg);
@@ -157,8 +125,9 @@ namespace H_Chat_Async_Server
 
         private void BTN_Send_Click(object sender, EventArgs e)
         {
-            richTextBox1.AppendText(InputBox.Text +"\n");
-            BroadCastingAsync(null,InputBox.Text);
+            
+            richTextBox1.AppendText($"{(server_chatCore).IP.ToString()} : { InputBox.Text}\n");
+            BroadCastingAsync(server_chatCore, (server_chatCore).IP.ToString()+"|"+InputBox.Text);
             this.Invoke(new Action(() =>
             {
                 InputBox.Clear();
