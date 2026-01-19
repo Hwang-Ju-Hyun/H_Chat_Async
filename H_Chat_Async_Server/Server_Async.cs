@@ -18,7 +18,7 @@ namespace H_Chat_Async_Server
     {
         private TcpListener server;
         private NetworkStream stream;
-        private string ip_addr = "172.18.171.66";
+        private string ip_addr = "192.168.45.30";
         private int port = 5001;
         private bool isRunning = false;
         ChatCore_Common.ChatCore_Async server_chatCore;
@@ -153,6 +153,11 @@ namespace H_Chat_Async_Server
         private void Server_Async_FormClosing(object sender, FormClosingEventArgs e)
         {
             AllClose();
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
